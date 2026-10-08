@@ -1,4 +1,4 @@
-FROM python:3.10-slim-bullseye
+FROM python:3.10-slim-bookworm
 
 # Install GDAL, GEOS, PROJ and other system dependencies required by GeoPandas and PostGIS
 RUN apt-get update && apt-get install -y \
