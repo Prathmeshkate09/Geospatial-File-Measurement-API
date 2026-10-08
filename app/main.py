@@ -31,10 +31,7 @@ async def upload_file(file: UploadFile = File(...), db: Session = Depends(get_db
     if not file.filename.lower().endswith(valid_extensions):
         raise HTTPException(status_code=400, detail="Only .zip (Shapefile) or .kml files are supported.")
         
-    # Basic MIME type checking
-    if file.content_type not in ["application/zip", "application/x-zip-compressed", "application/vnd.google-earth.kml+xml", "application/xml", "text/xml"]:
-        # Some clients send kml as application/xml or text/xml
-        raise HTTPException(status_code=400, detail="Invalid file content type.")
+
     file_id = str(uuid.uuid4())
     file_path = os.path.join(UPLOAD_DIR, f"{file_id}_{file.filename}")
     
