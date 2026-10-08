@@ -1,5 +1,10 @@
 import os
+import logging
 from celery import Celery
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
 from .database import SessionLocal
 from .models import UploadedFile, FeatureMeasurement
 from .geo_utils import process_file_measurements
@@ -47,16 +52,18 @@ def process_geospatial_file(file_id: str, file_path: str, original_filename: str
         
         db.bulk_save_objects(measurements_to_insert)
         
+
         # Update file status
         db_file.status = "COMPLETED"
         db_file.feature_count = len(features)
         db_file.crs = crs
         db.commit()
+        logger.info(f"Successfully processed file {file_id}. Found {len(features)} features.")
         
     except Exception as e:
         db_file.status = "FAILED"
         db.commit()
-        print(f"Error processing file {file_id}: {str(e)}")
+        logger.error(f"Error processing file {file_id}: {str(e)}", exc_info=True)
     finally:
         db.close()
         # Optionally remove the uploaded file to save disk space
