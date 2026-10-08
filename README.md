@@ -37,6 +37,23 @@ When a file is uploaded, the application:
 3.  The API will be available at `http://localhost:8000`.
 4.  The interactive API documentation (Swagger UI) is available at `http://localhost:8000/docs`.
 
+## Testing
+
+### Automated Tests & CI/CD
+This project features a fully automated test suite utilizing `pytest`. A GitHub Actions CI pipeline is configured to automatically run linting (`ruff`), static type checking (`mypy`), and unit tests against a temporary PostGIS database upon every push to `main`.
+
+To run tests locally:
+```bash
+docker-compose run --rm api pytest tests/ -v
+```
+
+### Manual Testing with Sample Files
+We have provided realistic sample files to test the API endpoints inside the `test_files/` directory:
+* `sample.kml`: Contains a Polygon representing Central Park and a LineString representing a nearby road.
+* `sample_shapefile.zip`: Contains an ESRI Shapefile with the Polygon data.
+
+You can upload either of these files via the Swagger UI (`http://localhost:8000/docs`) to see the background processing and geometry measurements in action!
+
 ## API Endpoints
 
 ### 1. Upload File
