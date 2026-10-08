@@ -45,6 +45,11 @@ def process_file_measurements(file_path: str, original_filename: str):
         gdf = gpd.read_file(read_path)
     except Exception as e:
         raise ValueError(f"Failed to read geospatial file: {str(e)}")
+        
+    # Drop Z dimension to avoid PostGIS 3D insertion errors for 2D columns
+    import shapely
+    if 'geometry' in gdf and gdf.geometry is not None:
+        gdf.geometry = shapely.force_2d(gdf.geometry)
 
     original_crs = str(gdf.crs) if gdf.crs else "UNKNOWN"
     
