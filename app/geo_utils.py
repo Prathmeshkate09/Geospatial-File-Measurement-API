@@ -3,7 +3,6 @@ import zipfile
 import shutil
 import geopandas as gpd
 import json
-from shapely.geometry import Point, LineString, Polygon, MultiPolygon, MultiLineString
 
 def extract_zip(zip_path: str, extract_to: str):
     """Extracts a zip file to the specified directory."""
@@ -80,7 +79,7 @@ def process_file_measurements(file_path: str, original_filename: str):
         try:
             projected_crs = gdf.estimate_utm_crs()
             gdf_projected = gdf.to_crs(projected_crs)
-        except:
+        except Exception:
              gdf_projected = gdf
     else:
         # Already projected

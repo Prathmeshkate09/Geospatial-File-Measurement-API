@@ -1,5 +1,4 @@
-import pytest
-import os
+
 import json
 from app.geo_utils import process_file_measurements
 

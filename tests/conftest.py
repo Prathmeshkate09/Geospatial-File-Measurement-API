@@ -1,11 +1,10 @@
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+
 from unittest.mock import patch
 
 from app.main import app
-from app.database import Base, get_db
+
 
 # We'll use the existing DATABASE_URL but in a transaction that rolls back, 
 # or just a separate schema if we wanted. For simplicity in this demo,

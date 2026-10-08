@@ -1,6 +1,6 @@
 import json
 from pydantic import BaseModel, validator
-from typing import Optional, List
+from typing import Optional
 
 class FileResponse(BaseModel):
     id: str
